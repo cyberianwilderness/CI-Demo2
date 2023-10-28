@@ -23,5 +23,6 @@ jobs:
         git config user.name 'GitHub Actions'
         git config user.email 'actions@github.com'
         git add COMMIT_HISTORY.md
-        git diff --quiet && git diff --staged --quiet || git commit -m "Update COMMIT_HISTORY.md"
-        git push
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update COMMIT_HISTORY.md" && git push)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
