@@ -14,15 +14,13 @@ jobs:
 
     - name: Generate commit history
       run: |
-        echo "Commit History" > COMMIT_HISTORY.md
-        echo "---------------" >> COMMIT_HISTORY.md
-        git log --pretty=format:"%h - %s (%an, %ar)" >> COMMIT_HISTORY.md
+        echo "# Commit History" > COMMIT_HISTORY.md
+        git log --pretty=format:"# %h%n### %s%n(%an, %ar)%n" >> COMMIT_HISTORY.md
 
     - name: Commit and push if changed
       run: |
         git config user.name 'GitHub Actions'
         git config user.email 'actions@github.com'
         git add COMMIT_HISTORY.md
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update COMMIT_HISTORY.md" && git push)
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        git diff --quiet && git diff --staged --quiet || git commit -m "Update COMMIT_HISTORY.md"
+        git push
